@@ -1,7 +1,7 @@
 <img width="400" src="https://github.com/user-attachments/assets/44bac428-01bb-4fe9-9d85-96cba7698bee" alt="Tor Logo with the onion and a crosshair on it"/>
 
 # Threat Hunt Report: Unauthorized TOR Usage
-- [Scenario Creation](https://github.com/fkarimmalanga/threat-hunting-scenario-tor-/edit/main/README.md)
+- [Scenario Creation](https://github.com/joshmadakor0/threat-hunting-scenario-tor/blob/main/threat-hunting-scenario-tor-event-creation.md)
 
 ## Platforms and Languages Leveraged
 - Windows 10 Virtual Machines (Microsoft Azure)
@@ -29,12 +29,16 @@ Searched for any file that had the string "tor" in it and discovered what looks 
 
 **Query used to locate events:**
 
+```kql
+DeviceFileEvents  
+| where DeviceName == "threat-hunt-lab"  
+| where InitiatingProcessAccountName == "employee"  
+| where FileName contains "tor"  
+| where Timestamp >= datetime(2024-11-08T22:14:48.6065231Z)  
+| order by Timestamp desc  
+| project Timestamp, DeviceName, ActionType, FileName, FolderPath, SHA256, Account = InitiatingProcessAccountName
 ```
-![image](https://github.com/user-attachments/assets/de56e875-7df1-475f-9be9-2fbaba126609)
-
-```
-![image](https://github.com/user-attachments/assets/439a5364-91bc-43b6-9108-5d84b0c5e15e)
-
+<img width="1212" alt="image" src="https://github.com/user-attachments/assets/71402e84-8767-44f8-908c-1805be31122d">
 
 ---
 
